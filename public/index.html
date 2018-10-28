@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" ng-app="MovieCars">
+  <head>
+    <meta charset="utf-8">
+    <title>Lights, Camera, Drive!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/skeleton.css">
+    <link rel="stylesheet" href="./css/app.css">
+  </head>
+
+  <body ng-controller="MovieCarController as ctrl">
+    <div class="container">
+      <h1 style="text-align:center">The largest supplier of car rentals for movies, television, and commercials </h1>
+      <a ng-click="ctrl.toggleReveal()" class="button button-primary" href="#" >Add New Car</a>
+      <a ng-click="ctrl.createCarSeed()" class="button button-primary" href="#" >Seed Cars</a>
+      <!-- ************* Form to add a new car ******************* -->
+      <form ng-submit="ctrl.createCar()" ng-show="ctrl.reveal">
+        <div class="container" style="border: 1px solid grey; border-radius: 5px; padding:2%;">
+          <div class="row">
+            <div class="six columns">
+              <label>Enter Make</label>
+              <input class="u-full-width" type="text" ng-model="ctrl.make" placeholder="Make" required/>
+            </div>
+            <div class="six columns">
+              <label>Enter Model</label>
+              <input class="u-full-width" type="text" ng-model="ctrl.model" placeholder="Model" required/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="six columns">
+              <label>Enter Year</label>
+              <input class="u-full-width" type="year" ng-model="ctrl.year" placeholder="YYYY"/>
+            </div>
+            <div class="six columns">
+              <label>Enter Color</label>
+              <input class="u-full-width" type="text" ng-model="ctrl.color" placeholder="Color"/>
+            </div>
+          </div>
+
+          <label for="exampleMessage">Add Image</label>
+          <input class="u-full-width"type="text" ng-model="ctrl.image" placeholder="Add Image Path"/>
+
+          <div class="row">
+            <div class="six columns">
+              <label class="example-send-yourself-copy">
+                <input type="checkbox" ng-model="ctrl.availability"/>
+                <span class="label-body"> Available</span>
+              </label>
+            </div>
+            <div class="six columns">
+              <label class="container">Tags:
+                <input type="text" ng-model="ctrl.tags" value=""/>
+              </label>
+            </div>
+          </div>
+
+          <label for="exampleMessage">Notes</label>
+          <input class="u-full-width"type="text" ng-model="ctrl.notes" placeholder="Optional"/>
+
+          <input class="button-primary" type="submit" value="List New Car">
+        </div>
+      </form>
+      <!-- ************* Show all cars ******************* -->
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Color</th>
+            <th>Tags</th>
+            <th>Image</th>
+            <th>Note</th>
+            <th>Availability</th>
+            <th>Delete</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="car in ctrl.cars">
+          <tr>
+            <td>{{car.make}}</td>
+            <td>{{car.model}}</td>
+            <td>{{car.year}}</td>
+            <td>{{car.color}}</td>
+            <td>{{car.tags[1]}}</td>
+            <td><img src="{{car.image}}" alt="{{car.make}}"  style="width:100px;/"></td>
+            <td>{{car.notes}}</td>
+            <td>{{car.availability ? 'Car is Available' : 'Car is not Available'}}</td>
+            <td><button ng-click="ctrl.deleteCar(car)" class="button"><img src="/assets/delete.png" style="width:20px;"/></button></td>
+            <td><button class="button" id="openModal"><img src="/assets/edit.png" style="width:20px;"/></button>
+              <!-- ************* Form to edit a car ******************* -->
+              <div id="modal">
+                <div id="modal-textbox">
+                  <a id="close" href="#"><img src="/assets/close.png" style="width:15px;" /></a>
+                    <form ng-submit="ctrl.updateCar(car)">
+                      <div class="container" style="border: 1px solid grey; border-radius: 5px; padding:2%;">
+                        <div class="row">
+                          <div class="six columns">
+                            <label>Enter Make</label>
+                            <input class="u-full-width" type="text" ng-model="ctrl.editedMake" value="" required/>
+                          </div>
+                          <div class="six columns">
+                            <label>Enter Model</label>
+                            <input class="u-full-width" type="text" ng-model="ctrl.editedModel" value="model" required/>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="six columns">
+                            <label>Enter Year</label>
+                            <input class="u-full-width" type="year" ng-model="ctrl.editedYear" placeholder="YYYY"/>
+                          </div>
+                          <div class="six columns">
+                            <label>Enter Color</label>
+                            <input class="u-full-width" type="text" ng-model="ctrl.editedColor" placeholder="Color"/>
+                          </div>
+                        </div>
+
+                        <label for="exampleMessage">Add Image</label>
+                        <input class="u-full-width"type="text" ng-model="ctrl.editedImage" placeholder="Add Image Path"/>
+
+                        <div class="row">
+                          <div class="six columns">
+                            <label class="example-send-yourself-copy">
+                              <input type="checkbox" ng-model="ctrl.editedAvailability"/>
+                              <span class="label-body"> Available</span>
+                            </label>
+                          </div>
+                          <div class="six columns">
+                            <label class="container">Tags:
+                              <input type="text" ng-model="ctrl.editedTags" value=""/>
+                            </label>
+                          </div>
+                        </div>
+
+                        <label for="exampleMessage">Notes</label>
+                        <input class="u-full-width"type="text" ng-model="ctrl.editedNotes" placeholder="Optional"/>
+                        <input class="button-primary" type="submit" value="Apply Changes" onclick="closeModal()">
+                      </div>
+                    </form>
+                </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<script src="js/modal.js" charset="utf-8"></script>
+    </div>
+  </body>
+</html>

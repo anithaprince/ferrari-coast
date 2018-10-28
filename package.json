@@ -1,0 +1,29 @@
+{
+  "name": "ferrari-coast",
+  "version": "1.0.0",
+  "engines": {
+  "node": "10.11.0"
+  },
+  "description": "ferrari-coast",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anithaprince/ferrari-coast.git"
+  },
+  "author": "Anitha Varghese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anithaprince/ferrari-coast/issues"
+  },
+  "homepage": "https://github.com/anithaprince/ferrari-coast#readme",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.3.7"
+  }
+}
